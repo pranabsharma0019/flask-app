@@ -23,7 +23,7 @@ def init_db():
 
 @app.route('/')
 def home():
-    return '<h1>Flask app is running</h1><p><a href="/notes">Go to notes</a></p>'
+	return '<h1>Flask app is running</h1><p><a href="notes">Go to notes</a></p>'
 
 @app.route('/notes')
 def notes():
