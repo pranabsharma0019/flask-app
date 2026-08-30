@@ -1,46 +1,39 @@
-from flask import Flask, render_template, request, redirect
-import sqlite3
+from flask import Flask, render_template
 import os
+import socket
+from datetime import datetime
 
 app = Flask(__name__)
-DB_PATH = os.path.join(os.path.dirname(__file__), 'data.db')
 
-def get_db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
-
-def init_db():
-    conn = get_db()
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS notes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            content TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
-@app.route('/')
+@app.route("/")
 def home():
-	return '<h1>Flask app is running</h1><p><a href="notes">Go to notes</a></p>'
+    return render_template(
+        "index.html",
+        hostname=socket.gethostname(),
+        environment=os.getenv("APP_ENV", "development"),
+        version=os.getenv("APP_VERSION", "1.0.0"),
+        time=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    )
 
-@app.route('/notes')
-def notes():
-    conn = get_db()
-    rows = conn.execute('SELECT * FROM notes').fetchall()
-    conn.close()
-    return {'notes': [dict(r) for r in rows]}
 
-@app.route('/notes', methods=['POST'])
-def add_note():
-    content = request.form.get('content')
-    conn = get_db()
-    conn.execute('INSERT INTO notes (content) VALUES (?)', (content,))
-    conn.commit()
-    conn.close()
-    return redirect('/notes')
+@app.route("/health")
+def health():
+    return {
+        "status": "healthy",
+        "service": "devops-dashboard"
+    }
 
-if __name__ == '__main__':
-    init_db()
-    app.run(host='0.0.0.0', port=5000)
+
+@app.route("/api/info")
+def info():
+    return {
+        "application": "DevOps Dashboard",
+        "version": os.getenv("APP_VERSION", "1.0.0"),
+        "environment": os.getenv("APP_ENV", "development"),
+        "hostname": socket.gethostname(),
+        "python": os.sys.version
+    }
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
