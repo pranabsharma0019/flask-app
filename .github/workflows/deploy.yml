@@ -7,15 +7,10 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Deploy to VM
-        uses: appleboy/ssh-action@v1.2.2
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_SSH_KEY }}
-          script: |
-            cd ~/flask-app
-            ./deploy.sh
+      - name: Deploy Flask app
+        run: |
+          cd ~/flask-app
+          ./deploy.sh
