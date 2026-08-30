@@ -45,3 +45,11 @@ def deploy():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
+
+
+@app.route("/version")
+def version():
+    return {
+        "version": "3.0.0",
+        "message": "GitHub Actions test deployment"
+    }

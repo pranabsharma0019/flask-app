@@ -1,11 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>DevOps Dashboard</title>
+    <title>Flask DevOps Dashboard</title>
 
     <style>
         * {
@@ -15,195 +13,96 @@
         }
 
         body {
-            font-family: Inter, Arial, sans-serif;
-            background: #0b1120;
-            color: #e5e7eb;
+            font-family: Arial, sans-serif;
             min-height: 100vh;
+            background: #f4f6f8;
+            color: #1f2937;
         }
-
-        .container {
-            width: 90%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 60px 0;
-        }
-
-        /* Header */
 
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 30px;
-            margin-bottom: 50px;
+            background: #111827;
+            color: white;
+            padding: 25px 8%;
         }
 
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        header h1 {
+            font-size: 28px;
         }
 
-        .logo {
-            width: 52px;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #2563eb;
-            border-radius: 14px;
-            font-size: 24px;
-            font-weight: bold;
+        header p {
+            margin-top: 6px;
+            color: #cbd5e1;
         }
 
-        h1 {
-            font-size: 32px;
-            margin-bottom: 6px;
+        main {
+            width: 84%;
+            max-width: 1000px;
+            margin: 50px auto;
         }
-
-        .subtitle {
-            color: #94a3b8;
-            font-size: 15px;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            border: 1px solid #166534;
-            background: #052e16;
-            color: #86efac;
-            border-radius: 30px;
-            font-size: 14px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #22c55e;
-            border-radius: 50%;
-        }
-
-        /* Hero */
 
         .hero {
-            background: linear-gradient(
-                135deg,
-                #172554,
-                #1e1b4b
-            );
-
-            border: 1px solid #312e81;
-            border-radius: 20px;
-            padding: 35px;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             margin-bottom: 25px;
         }
 
         .hero h2 {
-            font-size: 25px;
-            margin-bottom: 10px;
+            font-size: 36px;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            color: #c7d2fe;
-            line-height: 1.7;
-            max-width: 700px;
+            font-size: 18px;
+            color: #64748b;
         }
 
-        /* Cards */
+        .status {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: #dcfce7;
+            color: #166534;
+            font-weight: bold;
+        }
 
-        .grid {
+        .cards {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
         .card {
-            background: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 16px;
+            background: white;
             padding: 25px;
-            transition: transform 0.2s, border-color 0.2s;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
         }
 
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: #3b82f6;
+        .card h3 {
+            margin-bottom: 10px;
+            color: #475569;
         }
 
-        .card-title {
-            color: #94a3b8;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
+        .card strong {
+            font-size: 20px;
         }
-
-        .value {
-            font-size: 22px;
-            font-weight: 600;
-            word-break: break-word;
-        }
-
-        /* Links */
-
-        .actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 11px 18px;
-            border-radius: 9px;
-            text-decoration: none;
-            color: white;
-            background: #2563eb;
-            font-size: 14px;
-        }
-
-        .button.secondary {
-            background: #1f2937;
-            border: 1px solid #374151;
-        }
-
-        .button:hover {
-            opacity: 0.85;
-        }
-
-        /* Footer */
 
         footer {
-            margin-top: 60px;
-            padding-top: 25px;
-            border-top: 1px solid #1f2937;
+            text-align: center;
+            padding: 30px;
             color: #64748b;
-            font-size: 13px;
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
         }
 
-        /* Mobile */
-
         @media (max-width: 700px) {
-            header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .grid {
+            .cards {
                 grid-template-columns: 1fr;
             }
 
-            .actions {
-                flex-direction: column;
-            }
-
-            footer {
-                flex-direction: column;
+            .hero h2 {
+                font-size: 28px;
             }
         }
     </style>
@@ -211,130 +110,53 @@
 
 <body>
 
-<div class="container">
+<header>
+    <h1>Flask DevOps Dashboard</h1>
+    <p>CI/CD Deployment Practice Project</p>
+</header>
 
-    <header>
-
-        <div class="brand">
-
-            <div class="logo">
-                D
-            </div>
-
-            <div>
-                <h1>DevOps Dashboard</h1>
-
-                <p class="subtitle">
-                    Flask application deployment monitor
-                </p>
-            </div>
-
-        </div>
-
-        <div class="status">
-            <span class="dot"></span>
-            System Healthy
-        </div>
-
-    </header>
-
+<main>
 
     <section class="hero">
-
-        <h2>Deployment is live 🚀</h2>
-
+        <h2>🚀 Deployment Successful</h2>
         <p>
-            This application is running inside a Docker container and is
-            designed for practicing Git, CI/CD, Linux VM deployments and
-            containerized applications.
+            This Flask application is running inside Docker on the VM.
         </p>
 
+        <div class="status">
+            ● Application Online
+        </div>
     </section>
 
-
-    <section class="grid">
+    <section class="cards">
 
         <div class="card">
-
-            <div class="card-title">
-                Environment
-            </div>
-
-            <div class="value">
-                {{ info.environment }}
-            </div>
-
+            <h3>Environment</h3>
+            <strong>{{ info.environment }}</strong>
         </div>
 
-
         <div class="card">
-
-            <div class="card-title">
-                Application Version
-            </div>
-
-            <div class="value">
-                v{{ info.version }}
-            </div>
-
+            <h3>Version</h3>
+            <strong>{{ info.version }}</strong>
         </div>
 
-
         <div class="card">
-
-            <div class="card-title">
-                Server Hostname
-            </div>
-
-            <div class="value">
-                {{ info.hostname }}
-            </div>
-
+            <h3>Hostname</h3>
+            <strong>{{ info.hostname }}</strong>
         </div>
 
-
         <div class="card">
-
-            <div class="card-title">
-                Server Time
-            </div>
-
-            <div class="value">
-                {{ info.time }}
-            </div>
-
+            <h3>Server Time</h3>
+            <strong>{{ info.time }}</strong>
         </div>
 
     </section>
 
+</main>
 
-    <div class="actions">
-
-        <a href="/health" class="button">
-            Health Check
-        </a>
-
-        <a href="/api/info" class="button secondary">
-            API Information
-        </a>
-
-    </div>
-
-
-    <footer>
-
-        <span>
-            DevOps Dashboard
-        </span>
-
-        <span>
-            Flask · Docker · Linux · CI/CD
-        </span>
-
-    </footer>
-
-</div>
+<footer>
+    Flask → Git → GitHub → Docker → VM
+</footer>
 
 </body>
 </html>
-```
